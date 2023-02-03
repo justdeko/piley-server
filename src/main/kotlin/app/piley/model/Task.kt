@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.*
 import java.time.LocalDateTime
 
 data class Task(
-    val id: Long,
+    val id: Long = 0,
     val title: String = "",
     val pileId: Long = 1,
     val description: String = "",
@@ -14,13 +14,14 @@ data class Task(
     val reminder: LocalDateTime? = null,
     val status: TaskStatus = TaskStatus.DEFAULT,
 )
+
 object Tasks : Table() {
     val id = long("id").autoIncrement()
     val title = mediumText("title")
     val description = largeText("description")
     val createdAt = long("createdAt")
     val modifiedAt = long("modifiedAt")
-    val reminder = long("reminder")
+    val reminder = long("reminder").nullable()
     val status = integer("status")
 
     override val primaryKey = PrimaryKey(id)
