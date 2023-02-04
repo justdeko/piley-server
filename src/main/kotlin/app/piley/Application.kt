@@ -16,5 +16,6 @@ fun Application.module() {
     configureHTTP()
     configureSerialization()
     configureRouting()
+    configureSwagger()
     DatabaseFactory.init()
 }
