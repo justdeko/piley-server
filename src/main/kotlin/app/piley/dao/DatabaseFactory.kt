@@ -1,6 +1,7 @@
 package app.piley.dao
 
 import app.piley.model.Tasks
+import app.piley.model.Users
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -14,7 +15,7 @@ object DatabaseFactory {
         val jdbcURL = "jdbc:postgresql://localhost:5432/piley?user=postgres"
         val database = Database.connect(jdbcURL, driverClassName)
         transaction(database) {
-            SchemaUtils.create(Tasks)
+            SchemaUtils.create(Tasks, Users)
         }
     }
 

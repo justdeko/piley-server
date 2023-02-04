@@ -44,7 +44,7 @@ fun Route.taskRouting() {
         }
         delete("/{id}") {
             val id = call.parameters.getOrFail<Int>("id").toLong()
-            val deleted = taskDao.deleteTaskById(id)
+            val deleted = taskDao.deleteTask(id)
             if (deleted) {
                 call.respondText("Task deleted", status = HttpStatusCode.OK)
             } else {

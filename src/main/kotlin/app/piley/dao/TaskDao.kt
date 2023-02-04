@@ -7,5 +7,5 @@ interface TaskDao {
     suspend fun getTask(id: Long): Task?
     suspend fun createTask(task: Task): Task?
     suspend fun updateTask(task: Task): Boolean
-    suspend fun deleteTaskById(id: Long): Boolean
+    suspend fun deleteTask(id: Long): Boolean
 }

@@ -42,7 +42,7 @@ class TaskDaoImpl : TaskDao {
         } > 0
     }
 
-    override suspend fun deleteTaskById(id: Long): Boolean = dbQuery {
+    override suspend fun deleteTask(id: Long): Boolean = dbQuery {
         Tasks.deleteWhere { Tasks.id eq id } > 0
     }
 
