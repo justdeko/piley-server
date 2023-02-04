@@ -4,10 +4,11 @@ import app.piley.dao.DatabaseFactory.dbQuery
 import app.piley.model.Task
 import app.piley.model.Tasks
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class TaskDaoImpl : TaskDao {
     override suspend fun getTaskList(): List<Task> = dbQuery {
@@ -22,13 +23,13 @@ class TaskDaoImpl : TaskDao {
     }
 
     override suspend fun createTask(task: Task): Task? = dbQuery {
-        val creationTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+        val creationTime = Clock.System.now().epochSeconds
         val insertStatement = Tasks.insert {
             it[title] = task.title
             it[description] = task.description
             it[createdAt] = creationTime
             it[modifiedAt] = creationTime
-            it[reminder] = task.reminder?.toEpochSecond(ZoneOffset.UTC)
+            it[reminder] = task.reminder?.toInstant(TimeZone.UTC)?.epochSeconds
             it[status] = task.status.value
         }
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToTask)

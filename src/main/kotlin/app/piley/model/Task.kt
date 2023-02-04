@@ -1,16 +1,20 @@
 package app.piley.model
 
-import app.piley.util.utcZoneId
-import org.jetbrains.exposed.sql.*
-import java.time.LocalDateTime
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.Table
 
+@Serializable
 data class Task(
     val id: Long = 0,
     val title: String = "",
     val pileId: Long = 1,
     val description: String = "",
-    val createdAt: LocalDateTime = LocalDateTime.now(utcZoneId),
-    val modifiedAt: LocalDateTime = LocalDateTime.now(utcZoneId),
+    val createdAt: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
+    val modifiedAt: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
     val reminder: LocalDateTime? = null,
     val status: TaskStatus = TaskStatus.DEFAULT,
 )
