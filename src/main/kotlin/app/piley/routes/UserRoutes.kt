@@ -47,8 +47,8 @@ fun Route.userRouting() {
             }
         }
         delete("/{email}") {
-            val id = call.parameters.getOrFail<String>("email")
-            val deleted = userDao.deleteUser(id)
+            val email = call.parameters.getOrFail<String>("email")
+            val deleted = userDao.deleteUser(email)
             if (deleted) {
                 call.respondText("User deleted", status = HttpStatusCode.OK)
             } else {

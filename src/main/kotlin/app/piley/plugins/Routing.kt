@@ -1,5 +1,6 @@
 package app.piley.plugins
 
+import app.piley.routes.backupRouting
 import app.piley.routes.userRouting
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -13,6 +14,7 @@ fun Application.configureRouting() {
         }
         userRouting()
         authenticate("auth-basic-hashed") {
+            backupRouting()
         }
     }
 }
