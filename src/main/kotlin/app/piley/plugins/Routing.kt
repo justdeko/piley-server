@@ -1,6 +1,6 @@
 package app.piley.plugins
 
-import app.piley.routes.taskRouting
+import app.piley.routes.userRouting
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
@@ -11,8 +11,8 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
+        userRouting()
         authenticate("auth-basic-hashed") {
-            taskRouting()
         }
     }
 }

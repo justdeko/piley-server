@@ -13,10 +13,16 @@ class UserDaoImpl : UserDao {
         Users.selectAll().map(::resultRowToUser)
     }
 
-    override suspend fun getUser(email: String, password: String): User? = dbQuery {
+    override suspend fun getUserUsingPassword(email: String, password: String): User? = dbQuery {
         Users.select { Users.email eq email }
             .map(::resultRowToUser)
             .singleOrNull { BCrypt.checkpw(password, it.password) }
+    }
+
+    override suspend fun getUser(email: String): User? = dbQuery {
+        Users.select { Users.email eq email }
+            .map(::resultRowToUser)
+            .singleOrNull()
     }
 
     override suspend fun createUser(user: User): User? = dbQuery {

@@ -18,7 +18,7 @@ val digestFunction = getDigestFunction("SHA-256") { "ktor${it.length}" }
 
 suspend fun UserPasswordCredential.attemptAuth(): UserIdPrincipal? {
     val userTable = mutableMapOf<String, ByteArray>()
-    userDao.getUser(this.name, this.password)?.let {
+    userDao.getUserUsingPassword(this.name, this.password)?.let {
         userTable.put(this.name, digestFunction(this.password))
     }
     println(userTable)

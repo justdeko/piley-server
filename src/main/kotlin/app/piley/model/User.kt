@@ -10,6 +10,14 @@ data class User(
     val password: String = "",
 )
 
+data class UserUpdate(
+    val oldEmail: String = "",
+    val newEmail: String = "",
+    val name: String = "",
+    val oldPassword: String = "",
+    val newPassword: String = "",
+)
+
 object Users : Table() {
     val email = text("email")
     val name = text("name")
