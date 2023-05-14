@@ -5,6 +5,7 @@ import app.piley.dao.userDao
 import app.piley.model.User
 import app.piley.model.UserUpdate
 import app.piley.util.handleResult
+import app.piley.util.resourceAccessDenied
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -32,6 +33,7 @@ fun Route.userRouting() {
         authenticate("auth-basic-hashed") {
             put {
                 val userUpdate = call.receive<UserUpdate>()
+                if (call.resourceAccessDenied(userUpdate.oldEmail)) return@put
                 val existingUser = userDao.getUserUsingPassword(userUpdate.oldEmail, userUpdate.oldPassword)
                 if (existingUser != null) {
                     call.handleResult(
@@ -40,11 +42,12 @@ fun Route.userRouting() {
                         errorMessage = "Error updating user"
                     )
                 } else {
-                    call.respondText("User doesn't exist or no access", status = HttpStatusCode.Forbidden)
+                    call.respondText("User doesn't exist", status = HttpStatusCode.NotFound)
                 }
             }
             delete("/{email}") {
                 val email = call.parameters.getOrFail<String>("email")
+                if (call.resourceAccessDenied(email)) return@delete
                 call.handleResult(
                     successCondition = userDao.deleteUser(email).also {
                         // additionally attempt to delete backup, but this can fail (e.g. backup already deleted)

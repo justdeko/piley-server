@@ -5,6 +5,7 @@ import app.piley.model.UserBackup
 import app.piley.util.handleResult
 import app.piley.util.logError
 import app.piley.util.logInfo
+import app.piley.util.resourceAccessDenied
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -20,6 +21,7 @@ fun Route.backupRouting() {
     route("/backup") {
         post("/{email}") {
             val email = call.parameters.getOrFail<String>("email")
+            if (call.resourceAccessDenied(email)) return@post
             val multipartData = call.receiveMultipart()
             multipartData.forEachPart { part ->
                 if (part is PartData.FileItem) {
@@ -53,6 +55,7 @@ fun Route.backupRouting() {
         }
         get("/{email}") {
             val email = call.parameters.getOrFail<String>("email")
+            if (call.resourceAccessDenied(email)) return@get
             val backupEntity = backupDao.getBackup(email)
             if (backupEntity != null) {
                 val file = File(".", "piley_backupfile")
@@ -75,6 +78,7 @@ fun Route.backupRouting() {
         }
         delete("/{email}") {
             val email = call.parameters.getOrFail<String>("email")
+            if (call.resourceAccessDenied(email)) return@delete
             val success = backupDao.deleteBackup(email)
             call.handleResult(
                 successCondition = success,
