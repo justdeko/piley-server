@@ -17,3 +17,8 @@ suspend fun ApplicationCall.handleResult(
         respondText(errorMessage, status = errorStatusCode)
     }
 }
+
+fun ApplicationCall.logInfo(message: String) = application.environment.log.info(message)
+fun ApplicationCall.logDebug(message: String) = application.environment.log.debug(message)
+fun ApplicationCall.logError(message: String, exception: Throwable?) =
+    application.environment.log.error(message, exception)
