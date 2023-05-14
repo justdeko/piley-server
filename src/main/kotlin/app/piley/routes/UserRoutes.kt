@@ -1,5 +1,6 @@
 package app.piley.routes
 
+import app.piley.dao.backupDao
 import app.piley.dao.userDao
 import app.piley.model.User
 import app.piley.model.UserUpdate
@@ -30,17 +31,11 @@ fun Route.userRouting() {
         }
         authenticate("auth-basic-hashed") {
             put {
-                val user = call.receive<UserUpdate>()
-                val existingUser = userDao.getUserUsingPassword(user.oldEmail, user.oldPassword)
+                val userUpdate = call.receive<UserUpdate>()
+                val existingUser = userDao.getUserUsingPassword(userUpdate.oldEmail, userUpdate.oldPassword)
                 if (existingUser != null) {
                     call.handleResult(
-                        successCondition = userDao.updateUser(
-                            User(
-                                email = user.newEmail,
-                                name = user.name,
-                                password = user.newPassword
-                            )
-                        ),
+                        successCondition = userDao.updateUser(userUpdate),
                         successMessage = "User updated",
                         errorMessage = "Error updating user"
                     )
@@ -51,7 +46,10 @@ fun Route.userRouting() {
             delete("/{email}") {
                 val email = call.parameters.getOrFail<String>("email")
                 call.handleResult(
-                    successCondition = userDao.deleteUser(email),
+                    successCondition = userDao.deleteUser(email).also {
+                        // additionally attempt to delete backup, but this can fail (e.g. backup already deleted)
+                        backupDao.deleteBackup(email)
+                    },
                     successMessage = "User deleted",
                     errorStatusCode = HttpStatusCode.NotFound,
                     errorMessage = "User not found"

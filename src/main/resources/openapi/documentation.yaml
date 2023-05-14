@@ -4,7 +4,7 @@ info:
   description: "piley_server API"
   version: "1.0.0"
 servers:
-  - url: "https://piley_server"
+  - url: "http://0.0.0.0:8080"
 paths:
   /json/kotlinx-serialization:
     get:
@@ -13,7 +13,7 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: "string"
   /:
@@ -90,7 +90,7 @@ paths:
       description: ""
       requestBody:
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: "#/components/schemas/User"
         required: true
@@ -120,7 +120,7 @@ paths:
       description: ""
       requestBody:
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: "#/components/schemas/UserUpdate"
         required: true

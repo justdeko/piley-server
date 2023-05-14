@@ -2,6 +2,7 @@ package app.piley.dao
 
 import app.piley.dao.DatabaseFactory.dbQuery
 import app.piley.model.User
+import app.piley.model.UserUpdate
 import app.piley.model.Users
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.*
@@ -33,11 +34,11 @@ class UserDaoImpl : UserDao {
         }.resultedValues?.singleOrNull()?.let(::resultRowToUser)
     }
 
-    override suspend fun updateUser(user: User): Boolean = dbQuery {
-        Users.update({ Users.email eq user.email }) {
-            it[name] = user.name
-            it[email] = user.email
-            it[password] = BCrypt.hashpw(user.password, BCrypt.gensalt())
+    override suspend fun updateUser(update: UserUpdate): Boolean = dbQuery {
+        Users.update({ Users.email eq update.oldEmail }) {
+            it[name] = update.name
+            it[email] = update.newEmail
+            it[password] = BCrypt.hashpw(update.newPassword, BCrypt.gensalt())
         } > 0
     }
 

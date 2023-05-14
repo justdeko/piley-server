@@ -10,6 +10,7 @@ data class User(
     val password: String = "",
 )
 
+@Serializable
 data class UserUpdate(
     val oldEmail: String = "",
     val newEmail: String = "",
