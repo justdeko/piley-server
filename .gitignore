@@ -42,4 +42,3 @@ tmp/
 /docs/.swagger-codegen/
 /docs/.swagger-codegen-ignore
 /docs/index.html
-/src/main/resources/openapi/
