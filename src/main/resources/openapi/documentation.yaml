@@ -86,36 +86,6 @@ paths:
                 Example#1:
                   value: "Upload is not a file"
   /users:
-    put:
-      description: ""
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              $ref: "#/components/schemas/UserUpdate"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-        "403":
-          description: "Forbidden"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "User doesn't exist or no access"
     post:
       description: ""
       requestBody:
@@ -146,6 +116,36 @@ paths:
             text/plain:
               schema:
                 type: "string"
+    put:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/UserUpdate"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+        "403":
+          description: "Forbidden"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "User doesn't exist or no access"
   /users/{email}:
     delete:
       description: ""
@@ -170,6 +170,15 @@ paths:
                 type: "string"
 components:
   schemas:
+    User:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        name:
+          type: "string"
+        password:
+          type: "string"
     UserUpdate:
       type: "object"
       properties:
@@ -182,13 +191,4 @@ components:
         oldPassword:
           type: "string"
         newPassword:
-          type: "string"
-    User:
-      type: "object"
-      properties:
-        email:
-          type: "string"
-        name:
-          type: "string"
-        password:
           type: "string"
