@@ -15,6 +15,9 @@ fun Application.configureRouting() {
         userRouting()
         authenticate("auth-basic-hashed") {
             backupRouting()
+            get("/authenticate") {
+                call.respondText("User Authenticated")
+            }
         }
     }
 }
