@@ -31,6 +31,15 @@ fun Route.userRouting() {
             }
         }
         authenticate("auth-basic-hashed") {
+            get("/{email}") {
+                val email = call.parameters.getOrFail<String>("email")
+                val userEntity = userDao.getUser(email)
+                if (userEntity != null) {
+                    call.respond(userEntity)
+                } else {
+                    call.respondText("User not found", status = HttpStatusCode.NotFound)
+                }
+            }
             put {
                 val userUpdate = call.receive<UserUpdate>()
                 if (call.resourceAccessDenied(userUpdate.oldEmail)) return@put
