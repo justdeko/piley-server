@@ -64,6 +64,7 @@ fun Route.backupRouting() {
                     HttpHeaders.ContentDisposition,
                     ContentDisposition.Attachment
                         .withParameter(ContentDisposition.Parameters.FileName, "backupfilename.db") //TODO rename
+                        .withParameter(ContentDisposition.Parameters.ModificationDate, backupEntity.lastModifiedAt.toString())
                         .toString()
                 )
                 call.respondFile(file)
