@@ -30,6 +30,36 @@ paths:
                 Example#1:
                   value: "Hello World!"
   /backup/{email}:
+    delete:
+      description: ""
+      parameters:
+        - name: "email"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "403":
+          description: "Forbidden"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
     get:
       description: ""
       parameters:
@@ -39,6 +69,15 @@ paths:
           schema:
             type: "string"
       responses:
+        "403":
+          description: "Forbidden"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
         "200":
           description: "OK <br> A file response"
           content:
@@ -64,6 +103,15 @@ paths:
           schema:
             type: "string"
       responses:
+        "403":
+          description: "Forbidden"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
         "200":
           description: "OK"
           content:
@@ -125,6 +173,15 @@ paths:
               $ref: "#/components/schemas/UserUpdate"
         required: true
       responses:
+        "403":
+          description: "Forbidden"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
         "200":
           description: "OK"
           content:
@@ -137,6 +194,25 @@ paths:
             text/plain:
               schema:
                 type: "string"
+        "404":
+          description: "Not Found"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "User doesn't exist"
+  /users/{email}:
+    delete:
+      description: ""
+      parameters:
+        - name: "email"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
         "403":
           description: "Forbidden"
           content:
@@ -145,9 +221,20 @@ paths:
                 type: "string"
               examples:
                 Example#1:
-                  value: "User doesn't exist or no access"
-  /users/{email}:
-    delete:
+                  value: ""
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+    get:
       description: ""
       parameters:
         - name: "email"
@@ -159,15 +246,18 @@ paths:
         "200":
           description: "OK"
           content:
-            text/plain:
+            '*/*':
               schema:
-                type: "string"
-        "500":
-          description: "Internal Server Error"
+                $ref: "#/components/schemas/User"
+        "404":
+          description: "Not Found"
           content:
             text/plain:
               schema:
                 type: "string"
+              examples:
+                Example#1:
+                  value: "User not found"
 components:
   schemas:
     User:
