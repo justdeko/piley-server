@@ -35,7 +35,7 @@ fun Route.userRouting() {
                 val email = call.parameters.getOrFail<String>("email")
                 val userEntity = userDao.getUser(email)
                 if (userEntity != null) {
-                    call.respond(userEntity)
+                    call.respond(userEntity.copy ( password = "" ))
                 } else {
                     call.respondText("User not found", status = HttpStatusCode.NotFound)
                 }

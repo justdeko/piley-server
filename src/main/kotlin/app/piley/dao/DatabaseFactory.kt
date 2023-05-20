@@ -10,9 +10,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
     fun init() {
+        val baseUrl = System.getenv()["DB_BASE_URL"] ?: "localhost"
         val driverClassName = "org.postgresql.Driver"
-        // TODO: val jdbcURL = "jdbc:postgresql://db:5432/piley?user=postgres" is docker url, use conf file
-        val jdbcURL = "jdbc:postgresql://localhost:5432/piley?user=postgres"
+        val jdbcURL = "jdbc:postgresql://$baseUrl:5432/piley?user=postgres"
         val database = Database.connect(jdbcURL, driverClassName)
         transaction(database) {
             SchemaUtils.create(Users, UserBackups)
