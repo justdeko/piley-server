@@ -12,8 +12,7 @@ data class User(
 
 @Serializable
 data class UserUpdate(
-    val oldEmail: String = "",
-    val newEmail: String = "",
+    val email: String = "",
     val name: String = "",
     val oldPassword: String = "",
     val newPassword: String = "",

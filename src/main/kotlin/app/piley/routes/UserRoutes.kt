@@ -42,8 +42,8 @@ fun Route.userRouting() {
             }
             put {
                 val userUpdate = call.receive<UserUpdate>()
-                if (call.resourceAccessDenied(userUpdate.oldEmail)) return@put
-                val existingUser = userDao.getUserUsingPassword(userUpdate.oldEmail, userUpdate.oldPassword)
+                if (call.resourceAccessDenied(userUpdate.email)) return@put
+                val existingUser = userDao.getUserUsingPassword(userUpdate.email, userUpdate.oldPassword)
                 if (existingUser != null) {
                     call.handleResult(
                         successCondition = userDao.updateUser(userUpdate),
