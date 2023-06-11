@@ -35,9 +35,8 @@ class UserDaoImpl : UserDao {
     }
 
     override suspend fun updateUser(update: UserUpdate): Boolean = dbQuery {
-        Users.update({ Users.email eq update.oldEmail }) {
+        Users.update({ Users.email eq update.email }) {
             it[name] = update.name
-            it[email] = update.newEmail
             it[password] = BCrypt.hashpw(update.newPassword, BCrypt.gensalt())
         } > 0
     }
