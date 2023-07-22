@@ -42,3 +42,7 @@ tmp/
 /docs/.swagger-codegen/
 /docs/.swagger-codegen-ignore
 /docs/index.html
+
+
+## ssl
+/nginx/ssl/localhost.key
