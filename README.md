@@ -76,4 +76,4 @@ purposes.
 
 ## License
 
-[MIT](https://github.com/justdeko/pile-server/blob/main/LICENSE)
+[MIT](https://github.com/justdeko/piley-server/blob/main/LICENSE)
