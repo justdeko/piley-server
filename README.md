@@ -100,7 +100,7 @@ details, read the
 
 When the password is saved to the database, it
 is encrypted using the blowfish cipher and decrypted accordingly upon retrieval. piley-server uses
-the [jBCrypt library](https://www.mindrot.org/projects/jBCrypt/) for this.
+the [jBCrypt library](https://github.com/jeremyh/jBCrypt) for this.
 
 ## Monitoring
 
