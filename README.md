@@ -1,6 +1,21 @@
-# piley server
+<br />
+<div align="center">
+  <a href="https://github.com/justdeko/piley-server">
+    <img src="docs/piley-server-logo.png" alt="Logo" height="200">
+  </a>
 
-Self-hosted backend for uploading and synchronizing [piley](https://github.com/justdeko/piley) tasks.
+<h1 align="center">piley-server</h1>
+
+  <p align="center">
+    <a href="https://github.com/justdeko/piley/issues">report bug</a>
+    ·
+    <a href="https://github.com/justdeko/piley/issues">suggest feature</a>
+    ·
+    <a href="https://github.com/justdeko/piley">piley</a>
+  </p>
+</div>
+
+Backend application for uploading and synchronizing [piley](https://github.com/justdeko/piley) tasks.
 
 This service supports the following features:
 
@@ -14,7 +29,8 @@ To deploy or debug the service, you need the following tools:
 * docker
 * docker-compose
 * postgres or some sql db query engine (if you want to debug the db)
-* some JDK
+* A compatible JDK that can run java jars
+* (optional) IntelliJ or another IDE that provides a lot of the tools and configuration detection out of the box
 
 That's it!
 
@@ -48,30 +64,49 @@ Then, you can just run
 
 to deploy the database, the service and the reverse proxy server all at once.
 
-The default port of the server is 8080, if you use it with localhost certificates and docker, you can also access it
-via `https://localhost/
+The default exposed port of the server is 8081, if you use it with localhost certificates and docker, you can also access it
+via https://localhost/. Otherwise, use http://localhost:8081
 
 ## Usage and Customization
 
-To use the server in combination with the app, you need to expose it using a cloud provider or private server.
-Make sure to generate or add your ssl certificate and key to the following location:
+To use the server in combination with the app, you need to expose it to a level the android application also can see.
+Based on how extensively you want to use piley, this could be anything from a local machine, the local wireless network
+to entirely public.
+
+If you don't use the application port in combination with `http`, make sure to add a valid SSL certificate as the nginx config reroutes all
+http requests to https. Add the certificate and key to the following location:
 
     nginx/ssl
 
 they both should be named `localhost.crt` and `localhost.key` respectively. If you want to use other names, you need to
-adapt the `nginx.conf` file.
+adapt the `nginx.conf` file. If you want to have auto-renewing certificates, extend the
+deployment (`docker-compose.yml`).
 
-If you want to add new user properties, checck out the `app/piley/model/User.kt` class and
+### Customize the application
+
+If you want to add new user properties, check out the `app/piley/model/User.kt` class and
 also `app/piley/routes/UserRoutes.kt` for api endpoints. Don't forget to modify the DAO and its implementation
 under `app/piley/dao` as well.
 
 Aside from extending the code, you can also customize the database base url inside `docker-config.env`, which is `db` (
 the base url inside a network) by default.
 
+## Authentication and limitations
+
+piley-server currently uses basic authentication to perform any type of requests other than registering. This comes with
+the traditional limitations of basic auth. The basic auth pairs are stored during runtime in a hashed table. For more
+details, read the
+[ktor documentation](https://ktor.io/docs/basic.html#validate-user-hash).
+
+When the password is saved to the database, it
+is encrypted using the blowfish cipher and decrypted accordingly upon retrieval. piley-server uses
+the [jBCrypt library](https://www.mindrot.org/projects/jBCrypt/) for this.
+
 ## Monitoring
 
 If you want to connect your application to a monitoring service for health checks or similar, you can make a `GET`
-request to the base service url. Otherwise, there is a swagger UI available under `<base-url>/swagger` for debugging
+request to the base service url. It will return 200 with a "Hello world" plaintext message. Otherwise, there is a
+swagger UI available under `<base-url>/swagger` for api debugging
 purposes.
 
 ## License
