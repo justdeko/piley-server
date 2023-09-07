@@ -7,9 +7,9 @@
 <h1 align="center">piley-server</h1>
 
   <p align="center">
-    <a href="https://github.com/justdeko/piley/issues">report bug</a>
+    <a href="https://github.com/justdeko/piley-server/issues">report bug</a>
     ·
-    <a href="https://github.com/justdeko/piley/issues">suggest feature</a>
+    <a href="https://github.com/justdeko/piley-server/issues">suggest feature</a>
     ·
     <a href="https://github.com/justdeko/piley">piley</a>
   </p>
@@ -108,6 +108,19 @@ If you want to connect your application to a monitoring service for health check
 request to the base service url. It will return 200 with a "Hello world" plaintext message. Otherwise, there is a
 swagger UI available under `<base-url>/swagger` for api debugging
 purposes.
+
+## Planned features
+
+To view planned features and track the general progress, visit
+the [project board](https://github.com/users/justdeko/projects/1).
+
+## Contributing
+
+piley-server is FOSS and was developed for free. You are welcome to contribute and support, here are a few
+ways:
+
+* [Report a bug or suggest a new feature](https://github.com/justdeko/piley-server/issues)
+* Extend the app
 
 ## License
 
