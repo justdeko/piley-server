@@ -124,4 +124,4 @@ ways:
 
 ## License
 
-[MIT](https://github.com/justdeko/piley-server/blob/main/LICENSE)
+[Apache License 2.0](https://github.com/justdeko/piley-server/blob/main/LICENSE)
