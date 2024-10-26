@@ -1,3 +1,7 @@
+# Deprecated
+This repository is now deprecated and archived as piley doesn't support custom backup anymore. You can however still use this as a basis to implement it yourself.
+
+
 <br />
 <div align="center">
   <a href="https://github.com/justdeko/piley-server">
